@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.params=
+comment0.target=ElectricTool()
+comment0.text=\r\n\ Constructer\ calls\ superclass'\ (Tool)\ constructor\ that\ is\ not\ definenig\ fields\ too.\r\n\ To\ define\ fields\ use\ method\ extractData()\ in\ 'Shop'\ class\r\n
+comment1.params=rechargeable\ power\ timesBorrowed\ onLoan\ itemName\ itemCode\ cost\ weight
+comment1.target=ElectricTool(boolean,\ java.lang.String,\ int,\ boolean,\ java.lang.String,\ java.lang.String,\ int,\ int)
+comment2.params=
+comment2.target=void\ printDetails()
+comment3.params=
+comment3.target=java.lang.String\ getPower()
+comment4.params=
+comment4.target=boolean\ getReechargeable()
+comment5.params=sc1
+comment5.target=void\ extractData(java.util.Scanner)
+numComments=6

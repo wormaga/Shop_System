@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Perishable()
+comment0.text=\r\n\ Constructer\ calls\ superclass'\ (Accessory)\ constructor\ that\ is\ not\ definenig\ fields\ too.\r\n\ To\ define\ fields\ use\ method\ extractData()\ in\ 'Shop'\ class\r\n
+comment1.params=sc1
+comment1.target=void\ extractData(java.util.Scanner)
+comment2.params=
+comment2.target=void\ printDetails()
+comment3.params=
+comment3.target=boolean\ getIsIrritant()
+comment4.params=
+comment4.target=java.lang.String\ getUseByDate()
+comment5.params=
+comment5.target=int\ getVolume()
+comment6.params=value
+comment6.target=void\ setVolume(int)
+comment7.params=value
+comment7.target=void\ setIsIrritant(boolean)
+numComments=8

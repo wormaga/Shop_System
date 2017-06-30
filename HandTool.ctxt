@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=
+comment0.target=HandTool()
+comment0.text=\r\n\ Constructer\ calls\ superclass'\ (Tool)\ constructor\ that\ is\ not\ definenig\ fields\ too.\r\n\ To\ define\ fields\ use\ method\ extractData()\ in\ 'Shop'\ class\r\n\ \r\n
+comment1.params=
+comment1.target=void\ printDetails()
+comment2.params=
+comment2.target=boolean\ getSharpenable()
+comment3.params=sc1
+comment3.target=void\ extractData(java.util.Scanner)
+numComments=4

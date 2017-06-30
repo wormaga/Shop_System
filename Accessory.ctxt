@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Accessory()
+comment0.text=\r\n\ To\ put\ value\ to\ the\ field\ use\ extractData()\ from\ 'Shop'\ class.\r\n
+comment1.params=
+comment1.target=void\ printDetails()
+comment2.params=sc1
+comment2.target=void\ extractData(java.util.Scanner)
+comment3.params=
+comment3.target=java.lang.String\ getPosition()
+comment4.params=value
+comment4.target=void\ setPosittion(java.lang.String)
+numComments=5

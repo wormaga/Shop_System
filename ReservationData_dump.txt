@@ -1,0 +1,3 @@
+// New reservation data
+// data is reservationNo, itemID,ring customerID, startDate, noOfDays
+000075,HT5623,AB-096104,20-02-2018,5

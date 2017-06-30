@@ -1,0 +1,7 @@
+// New customer data
+// data is customerID, surname, firstName, otherInitials, title
+AB-457628,Konopackis,Alex,J,Mr
+AB-303666,Gregson,Brian,R T,Mr
+AB-152346,Newton,David,E,Dr
+AB-537186,Evans,David,,Dr
+AB-096104,Smith,Sara,C,Ms
