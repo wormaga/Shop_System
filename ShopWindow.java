@@ -4,13 +4,18 @@
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FileDialog;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.print.*;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -18,6 +23,7 @@ import java.util.HashSet;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -36,7 +42,7 @@ import java.util.Iterator;
  * The window has an area for displaying output, for example the output
  * from System.out.println(), and a menu bar.
  *
- * @author D.E.Newton
+ * @author Alex Konopackis
  * @version Part 4 Step 5
  */
 public class ShopWindow extends JFrame implements ActionListener
@@ -193,13 +199,14 @@ public class ShopWindow extends JFrame implements ActionListener
         setupMenuItem(shopMenu, "New shop...", "Create a shop", 'N', true);
         setupMenuItem(shopMenu, "Open shop...", "Open a shop", 'O', true);
         setupMenuItem(shopMenu, "Close shop", "Close the shop", 'C', false);
+        setupMenuItem(shopMenu, "Save Output", "Save \"Output Area\" to txt document", 'S', false);
         setupMenuItem(shopMenu, "Exit", "Close down and exit the model", 'X', true);
 
         // edit menu
         editMenu = setupMenu(menuBar, "Edit", 'E');
         setupMenuItem(editMenu, "Copy", "Copy selected text from Output area to clipboard", 'C', true, KeyStroke.getKeyStroke("ctrl C"));
         setupMenuItem(editMenu, "Clear", "Clear Output area", 'L', true, KeyStroke.getKeyStroke("ctrl E"));
-        setupMenuItem(editMenu, "Print", "Print text in the output area", 'P', true);
+        setupMenuItem(editMenu, "Print", "Print text in the output area", 'P', true, KeyStroke.getKeyStroke("ctrl P"));
         setupMenuItem(editMenu, "Cut", "Cut selected text in the output area", 'X', true, KeyStroke.getKeyStroke("ctrl K"));
         setupMenuItem(editMenu, "Paste", "Paste remebered text in the output area", 'P', true, KeyStroke.getKeyStroke("ctrl L"));
 
@@ -280,6 +287,26 @@ public class ShopWindow extends JFrame implements ActionListener
                 checkEnableStatusOfCommands();
             }
         }
+        else if (action.equals("Save Output"))
+        {
+            String filename = null;
+            Frame frame = null;
+            FileDialog fDialog = new FileDialog(frame, "save", FileDialog.SAVE);
+            fDialog.setVisible(true);
+            filename = fDialog.getFile();
+            String fileDirectory = fDialog.getDirectory();
+
+            File fileName = new File(fileDirectory+filename);
+            BufferedWriter outFile = null;
+            try {
+                outFile = new BufferedWriter(new FileWriter(fileName));
+                outputArea.write(outFile);   // *** here: ***
+                outFile.close();
+            } catch (IOException ex) {
+                System.err.println("Cannot save \"Output Area\" to file");
+            }
+            
+        }
         else if( action.equals("Close shop"))
         {
             //shop.closeDownSystem(); // save data so can restart
@@ -293,8 +320,8 @@ public class ShopWindow extends JFrame implements ActionListener
         {
             if( shop!=null )
             // a shop has been created or opened so save data so can restart
-            shop.closeDownSystem();
-                System.exit(0);  // close down the application
+                shop.closeDownSystem();
+            System.exit(0);  // close down the application
         }
 
         //
@@ -328,11 +355,11 @@ public class ShopWindow extends JFrame implements ActionListener
             outputArea.cut();
             outputArea.setEditable(false);
         } 
-       else if( action.equals("Paste") )
+        else if( action.equals("Paste") )
         {
             outputArea.setEditable(true);
-              int len = outputArea.getDocument().getLength();
-              outputArea.setCaretPosition(len);
+            int len = outputArea.getDocument().getLength();
+            outputArea.setCaretPosition(len);
             System.out.println(" ");
             outputArea.paste();
             outputArea.setEditable(false);
@@ -505,6 +532,7 @@ public class ShopWindow extends JFrame implements ActionListener
             menuItemSetEnabled(false, shopMenu, "New shop...");
             menuItemSetEnabled(false, shopMenu, "Open shop...");
             menuItemSetEnabled(true, shopMenu, "Close shop");
+            menuItemSetEnabled(true, shopMenu, "Save output");
 
             // enable Load commands
             menuItemSetEnabled(true, customerMenu, "Load customers...");
