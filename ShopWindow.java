@@ -209,6 +209,7 @@ public class ShopWindow extends JFrame implements ActionListener
         setupMenuItem(editMenu, "Print", "Print text in the output area", 'P', true, KeyStroke.getKeyStroke("ctrl P"));
         setupMenuItem(editMenu, "Cut", "Cut selected text in the output area", 'X', true, KeyStroke.getKeyStroke("ctrl K"));
         setupMenuItem(editMenu, "Paste", "Paste remebered text in the output area", 'P', true, KeyStroke.getKeyStroke("ctrl L"));
+        setupMenuItem(editMenu, "Find", "Find text in the output area", 'F', true, KeyStroke.getKeyStroke("ctrl F"));
 
         // shop item menu
         shopItemMenu = setupMenu(menuBar, "Shop item", 'I');
@@ -305,7 +306,7 @@ public class ShopWindow extends JFrame implements ActionListener
             } catch (IOException ex) {
                 System.err.println("Cannot save \"Output Area\" to file");
             }
-            
+
         }
         else if( action.equals("Close shop"))
         {
@@ -363,7 +364,23 @@ public class ShopWindow extends JFrame implements ActionListener
             System.out.println(" ");
             outputArea.paste();
             outputArea.setEditable(false);
+        } else if (action.equals("Find"))
+        {
+            String textToSearch = JOptionPane.showInputDialog("What you want to find?");
+            int len = textToSearch.length();
+            int searchTextPosition=-1;
+            searchTextPosition = outputArea.getText().indexOf(textToSearch);
+            if (searchTextPosition == -1 )
+            {
+                JOptionPane.showMessageDialog(null, "Search Value Not Found");
+            }
+            else
+            {
+                outputArea.select(searchTextPosition, searchTextPosition + len);
+            }
+			
         }
+
 
         //
         // Shop item menu
