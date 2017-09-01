@@ -3,6 +3,7 @@
 // all the classes imported
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Font;
@@ -210,6 +211,7 @@ public class ShopWindow extends JFrame implements ActionListener
         setupMenuItem(editMenu, "Cut", "Cut selected text in the output area", 'X', true, KeyStroke.getKeyStroke("ctrl K"));
         setupMenuItem(editMenu, "Paste", "Paste remebered text in the output area", 'P', true, KeyStroke.getKeyStroke("ctrl L"));
         setupMenuItem(editMenu, "Find", "Find text in the output area", 'F', true, KeyStroke.getKeyStroke("ctrl F"));
+        setupMenuItem(editMenu, "Find Next", "Find selected text in the output area", 'G', true, KeyStroke.getKeyStroke("ctrl G"));
 
         // shop item menu
         shopItemMenu = setupMenu(menuBar, "Shop item", 'I');
@@ -378,9 +380,29 @@ public class ShopWindow extends JFrame implements ActionListener
             {
                 outputArea.select(searchTextPosition, searchTextPosition + len);
             }
-			
-        }
 
+        } else if (action.equals("Find Next"))
+        {
+            outputArea.copy();
+            try{
+                String textToSearch = outputArea.getSelectedText();
+                int len = textToSearch.length();
+                int previousTextPosition = outputArea.getCaretPosition() + len;
+                int searchTextPosition = outputArea.getText().indexOf(textToSearch, previousTextPosition);
+                if (searchTextPosition >= previousTextPosition )
+                {
+                    outputArea.select(searchTextPosition, searchTextPosition + len);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "No more matches");
+                } 
+            }
+            catch (Exception ee)
+            {
+                JOptionPane.showMessageDialog(null, "Text to search is not selected");
+            }
+        }
 
         //
         // Shop item menu
@@ -639,6 +661,8 @@ public class ShopWindow extends JFrame implements ActionListener
         System.err.println(message);
         System.out.println(message);      
     }
+
+    
 
     // inner class
     private class TextAreaOutputStream extends OutputStream
