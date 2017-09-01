@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
+import java.awt.print.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -311,15 +312,30 @@ public class ShopWindow extends JFrame implements ActionListener
         else if( action.equals("Print") )
         {
             System.out.println("Button print is working");
+            try 
+            {
+                outputArea.print();
+            }
+            catch (PrinterException ee)
+            {
+                System.err.println("Cannot find printer");
+            }
             //errorPrintln("\nAction \"" + action + "\" not fully implemented");
         }
         else if( action.equals("Cut") )
         {
+            outputArea.setEditable(true);
             outputArea.cut();
+            outputArea.setEditable(false);
         } 
        else if( action.equals("Paste") )
         {
+            outputArea.setEditable(true);
+              int len = outputArea.getDocument().getLength();
+              outputArea.setCaretPosition(len);
+            System.out.println(" ");
             outputArea.paste();
+            outputArea.setEditable(false);
         }
 
         //
@@ -467,7 +483,7 @@ public class ShopWindow extends JFrame implements ActionListener
         }
         else if( action.equals("About") )
         {
-            String version = "Version: 4.11 (released 15 April, 2010)"; 
+            String version = "Version: 4.11 (released 15 April, 2017)"; 
             JOptionPane.showMessageDialog(this, version, "About the shop",
                 JOptionPane.INFORMATION_MESSAGE);
         }
