@@ -11,6 +11,8 @@ import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.print.*;
@@ -30,6 +32,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
@@ -56,6 +59,7 @@ public class ShopWindow extends JFrame implements ActionListener
     private JTextArea outputArea;
     private HashSet<String> associatedTextSet; // for menus and menu items
     private JMenu shopMenu, editMenu, shopItemMenu, customerMenu, reservationMenu, helpMenu;
+    private JPopupMenu popupMenu;
 
     /**
      * Constructor for objects of class ReservationSystemWindow
@@ -90,6 +94,7 @@ public class ShopWindow extends JFrame implements ActionListener
 
         setupMenusAndActions();
         setUpOutputArea();
+        setupRightClickPopUpMenu(); //must after setUpOutputArea()
 
         setVisible(true);
     }
@@ -237,6 +242,43 @@ public class ShopWindow extends JFrame implements ActionListener
         setupMenuItem(helpMenu, "About", "About the shop", 'A', true);
 
         setJMenuBar(menuBar);
+    }
+
+    private void setupPopupMenuItem(JPopupMenu menu,String menuItemText, boolean enabled )
+    {
+        JMenuItem menuItem = new JMenuItem(menuItemText);
+
+        menuItem.setEnabled(enabled);
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+    }
+
+    private void setupRightClickPopUpMenu()
+    {
+        popupMenu = new JPopupMenu();
+
+        //
+        //Right click Popup Menu items:
+        //
+        setupPopupMenuItem(popupMenu,"Copy", true);
+        setupPopupMenuItem(popupMenu,"Cut", true);
+        setupPopupMenuItem(popupMenu,"Paste", true);
+        //
+        //Add mouse listener for RightClick popup menu
+        //
+        outputArea.addMouseListener(new MouseAdapter() {
+                // public void mousePressed(MouseEvent evt) {
+                //     if (evt.isPopupTrigger()) {
+                //         popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+                //     }
+                // }
+
+                public void mouseReleased(MouseEvent evt) {
+                    if (evt.isPopupTrigger()) {
+                        popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+                    }
+                }
+            }); 
     }
 
     /**
@@ -661,8 +703,6 @@ public class ShopWindow extends JFrame implements ActionListener
         System.err.println(message);
         System.out.println(message);      
     }
-
-    
 
     // inner class
     private class TextAreaOutputStream extends OutputStream
