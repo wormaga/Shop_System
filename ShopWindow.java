@@ -263,15 +263,16 @@ public class ShopWindow extends JFrame implements ActionListener
         setupPopupMenuItem(popupMenu,"Copy", true);
         setupPopupMenuItem(popupMenu,"Cut", true);
         setupPopupMenuItem(popupMenu,"Paste", true);
+
         //
         //Add mouse listener for RightClick popup menu
         //
         outputArea.addMouseListener(new MouseAdapter() {
-                // public void mousePressed(MouseEvent evt) {
-                //     if (evt.isPopupTrigger()) {
-                //         popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
-                //     }
-                // }
+                public void mousePressed(MouseEvent evt) {
+                    if (!evt.isPopupTrigger()) {
+                        outputArea.getCaret().setVisible(true);  //display cursor on click inside the outputArea  
+                    }
+                }
 
                 public void mouseReleased(MouseEvent evt) {
                     if (evt.isPopupTrigger()) {
@@ -295,7 +296,6 @@ public class ShopWindow extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         String action = e.getActionCommand();
-
         //
         // System menu
         //
@@ -763,6 +763,7 @@ public class ShopWindow extends JFrame implements ActionListener
             }
 
             sb.append((char)b);
+            outputArea.getCaret().setVisible(true); //display cursor after dislaying text inside the outputArea 
         }
     }
 }
