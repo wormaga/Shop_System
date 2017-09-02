@@ -533,46 +533,10 @@ public class ShopWindow extends JFrame implements ActionListener
             //errorPrintln("\nAction \"" + action + "\" not fully implemented");            
             String startDate = JOptionPane.showInputDialog("Please input Start Date dd-mm-yyyy");
             String endDate = JOptionPane.showInputDialog("Please input End Date dd-mm-yyyy");
-            if (DateUtil.isValidDateString(startDate) && DateUtil.isValidDateString(endDate))
+            String message = shop.printReservationBetweenDates(startDate, endDate);
+            if (!message.equals(""))
             {
-
-                HashSet<ShopItemReservation> reservationSet = new HashSet<ShopItemReservation>();
-                Date date = DateUtil.convertStringToDate(startDate);
-                Date date_end = DateUtil.convertStringToDate(endDate);
-                if (true) //TODO startDate.before(date_end)
-                {
-                    int noOfDays = DateUtil.daysBetween(date, DateUtil.convertStringToDate(endDate));
-                    for (int i=0; i<noOfDays; i++)
-                    {
-                        ShopItemReservation[] shopItemReservations = shop.getDiary().getItemReservations(date);
-                        int len=0;
-                        if (shopItemReservations!=null) len = shopItemReservations.length;
-                        for (int j=0; j<len; j++)
-                        {
-                            reservationSet.add(shopItemReservations[j]);
-                        }
-                        date = DateUtil.nextDate(date);
-                    }
-
-                    Iterator<ShopItemReservation> it = reservationSet.iterator();
-                    while (it.hasNext())
-                    {
-                        it.next().printDetails();
-                    }
-                    if (reservationSet.size()==0){
-                        System.out.println("There are no reservation between "+startDate+" and "+endDate);
-                    }
-
-                }
-                else
-                {
-                    errorPrintln("\nStartDate must be before EndDate");
-                }
-
-            }
-            else
-            {
-                errorPrintln("\nDate format is wrong, it should be dd-mm-yyyy");
+                JOptionPane.showMessageDialog(null,message );
             }
         }
         else if( action.equals("Delete reservation") )

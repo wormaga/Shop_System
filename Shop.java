@@ -223,6 +223,50 @@ public class Shop
         }
     }
 
+    public String printReservationBetweenDates (String startDate, String endDate)
+    {
+        if (DateUtil.isValidDateString(startDate) && DateUtil.isValidDateString(endDate))
+            {
+                HashSet<ShopItemReservation> reservationSet = new HashSet<ShopItemReservation>();
+                Date date = DateUtil.convertStringToDate(startDate);
+                Date date_end = DateUtil.convertStringToDate(endDate);
+                int noOfDays = DateUtil.daysBetween(date, date_end);
+                if (noOfDays >= 0) //start Date is before end Date
+                {
+                    
+                    for (int i=0; i<noOfDays; i++)
+                    {
+                        ShopItemReservation[] shopItemReservations = diary.getItemReservations(date);
+                        int len=0;
+                        if (shopItemReservations!=null) len = shopItemReservations.length;
+                        for (int j=0; j<len; j++)
+                        {
+                            reservationSet.add(shopItemReservations[j]);
+                        }
+                        date = DateUtil.nextDate(date);
+                    }
+
+                    Iterator<ShopItemReservation> it = reservationSet.iterator();
+                    while (it.hasNext())
+                    {
+                        it.next().printDetails();
+                    }
+                    if (reservationSet.size()==0){
+                        System.out.println("There are no reservation between "+startDate+" and "+endDate);
+                    }
+                    return("");
+                }
+                else
+                {
+                    return("\nStartDate must be before EndDate");
+                }
+
+            }
+            else
+            {
+                return("\nDate format is wrong, it should be dd-mm-yyyy");
+            }
+    }
     public void writeItemReservationData() 
     {
         if (itemReservationMap.isEmpty()) 
