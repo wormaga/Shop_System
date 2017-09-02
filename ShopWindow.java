@@ -368,10 +368,10 @@ public class ShopWindow extends JFrame implements ActionListener
             outputArea.setEditable(false);
         } else if (action.equals("Find"))
         {
-            String textToSearch = JOptionPane.showInputDialog("What you want to find?");
+            String textToSearch = JOptionPane.showInputDialog("What you want to find?").toLowerCase();
             int len = textToSearch.length();
             int searchTextPosition=-1;
-            searchTextPosition = outputArea.getText().indexOf(textToSearch);
+            searchTextPosition = outputArea.getText().toLowerCase().indexOf(textToSearch);
             if (searchTextPosition == -1 )
             {
                 JOptionPane.showMessageDialog(null, "Search Value Not Found");
@@ -385,10 +385,10 @@ public class ShopWindow extends JFrame implements ActionListener
         {
             outputArea.copy();
             try{
-                String textToSearch = outputArea.getSelectedText();
+                String textToSearch = outputArea.getSelectedText().toLowerCase();
                 int len = textToSearch.length();
                 int previousTextPosition = outputArea.getCaretPosition() + len;
-                int searchTextPosition = outputArea.getText().indexOf(textToSearch, previousTextPosition);
+                int searchTextPosition = outputArea.getText().toLowerCase().indexOf(textToSearch, previousTextPosition);
                 if (searchTextPosition >= previousTextPosition )
                 {
                     outputArea.select(searchTextPosition, searchTextPosition + len);
